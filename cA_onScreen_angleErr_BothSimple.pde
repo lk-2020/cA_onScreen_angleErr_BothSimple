@@ -28,11 +28,11 @@ int whiteSkeletonXincr = 150;
 int whiteSkeletonX = dWidth/2 ;
 int whiteSkeletonY = 720/2;
 
-int whiteRightHandJointX = dWidth/2 + 50 ;
+int whiteRightHandJointX = dWidth/2 + 100 ;
 int whiteRightHandJointY = 304;
-int whiteLeftHandJointX = whiteRightHandJointX-100;
+int whiteLeftHandJointX = whiteRightHandJointX-200;
 int whiteLeftHandJointY = whiteRightHandJointY;
-int whiteRightHandEndX = dWidth/2 + 100;
+int whiteRightHandEndX = dWidth/2 + 100 + 50;
 int whiteRightHandEndY = 200;
 int whiteLeftHandEndX = dWidth/2 - 100;
 int whiteLeftHandEndY = 200;
@@ -54,8 +54,12 @@ public class xandy
 }
 
 
-int whiteHandLength = 150; 
+int whiteHandLength = 200; 
 float angle;
+float[] angleArray = {
+  0, 15, 30, 45, 60, 75, 90
+};
+int i =0 ;
 //-----------------------------------------------------------------------------------------
 
 void setup() {
@@ -73,10 +77,6 @@ void setup() {
   rectMode(CENTER);
   //ellipseMode(CORNERS);
 
-  sqrtL = new float[4]; 
-  isLengthEqualL = new float[4];
-  sqrtR = new float[4];
-  isLengthEqualR = new float[4];
   startButtonX = dWidth - 200 ;
   startButtonY = dHeight - 70;
   stopButtonX = dWidth - 100 ;
@@ -111,69 +111,59 @@ void draw() {
   {
     cursor(ARROW);
   }
+  strokeWeight(25);
+  stroke(255);
 
 
 
   if (start == true)
   {
-    strokeWeight(25);
-    stroke(255);
+    angle = radians(angleArray[0]);
 
-    if (temp < 100)
+    if ((temp > 100) && (temp < 200))
     {
-      angle = radians(0);
-    }
-    else if ((temp > 100) && (temp < 200))
-    {
-      angle = radians(30);
-    }
-    else if ((temp > 200) && (temp < 300))
-    {
-      angle = radians(-60);
+      angle = radians(angleArray[2]);
     }
     else if ((temp > 300) && (temp < 400))
     {
-      angle = radians(-90);
-    }
-
-    else if ((temp > 400) && (temp < 500))
-    {
-      angle = radians(-30);
+      angle = radians(-angleArray[2]);
     }
     else if ((temp > 500) && (temp < 600))
     {
-      angle = radians(30);
-    }
-    else if ((temp > 600) && (temp < 700))
-    {
-      angle = radians(90);
+      angle = radians(angleArray[5]);
     }
     else if ((temp > 700) && (temp < 800))
     {
-      angle = radians(0);
-    }
-
-    else if ((temp > 800) && (temp < 900))
-    {
-      angle = radians(-90);
+      angle = radians(angleArray[4]);
     }
     else if ((temp > 900) && (temp < 1000))
     {
-      angle = radians(60);
-    }
-    else if ((temp > 1000) && (temp < 1100))
-    {
-      angle = radians(70);
+      angle = radians(-angleArray[5]);
     }
     else if ((temp > 1100) && (temp < 1200))
     {
-      angle = radians(-30);
+      angle = radians(-angleArray[4]);
     }
-    else if (temp>1200)
+    else if ((temp > 1300) && (temp < 1400))
+    {
+      angle = radians(-angleArray[3]);
+    }
+    else if ((temp > 1500) && (temp < 1600))
+    {
+      angle = radians(angleArray[6]);
+    }
+    else if ((temp > 1700) && (temp < 1800))
+    {
+      angle = radians(angleArray[3]);
+    }
+    else if (temp>1900)
+    {
       temp = 0;
-
-
-    temp ++;
+      i++;
+    }
+    if (i == 2)
+      start = false;
+        temp ++;
   }
   else if (start == false)
   {
@@ -181,7 +171,7 @@ void draw() {
     temp = 0;
   }
   
-  
+  strokeWeight(35);
   segmentL(whiteLeftHandJointX, whiteLeftHandJointY, radians(180) - angle, whiteHandLength);
   segmentR(whiteRightHandJointX, whiteRightHandJointY, angle, whiteHandLength);
   drawWhiteChar();
@@ -194,7 +184,8 @@ void drawWhiteChar() //white left body
   fill(255);
   noStroke();
   //noFill();
-  rect(whiteSkeletonX, whiteSkeletonY, 160, 160, 15);
+    //rect(whiteSkeletonX, whiteSkeletonY, 160, 160, 15);
+  rect(whiteSkeletonX, whiteSkeletonY+30, 240, 220, 15);
 }
 
 
